@@ -7,23 +7,19 @@ def buscar_nueva():
     global m
     archivo = filedialog.askopenfilename(filetypes=[("Image",("*.jpg","*.png"))])
     m = Image.open(archivo)
-    m.thumbnail((500,500))
-    m = ImageTk.PhotoImage(m)
+    m_tk = m
+    m_tk.thumbnail((500,500))
+    m_tk = ImageTk.PhotoImage(m_tk)
     global imagen
-   
-    imagen.destroy()
-    imagen = tkinter.Label(ventana, image=m)
-    imagen.image = m
+    imagen.configure(image=m_tk)
+    imagen.image = m_tk
     imagen.pack()
     
 def guardar_nueva():
-    
-    archivo =filedialog.asksaveasfile()
-    m.save("image/nuevasimagenes")
-    
-    imagen = tkinter.Label(ventana)
-    imagen.pack()
-    
+    global m
+    archivo = filedialog.asksaveasfilename(filetypes=[("JPEG","*.jpg")])
+    m.save(archivo)
+
 
 
 
@@ -36,20 +32,21 @@ img_boton = PhotoImage(file="carpeta.png")
 img_boton2=Image.open("disco-flexible.png")
 img_boton2 = PhotoImage(file="disco-flexible.png")
 
+frame_btn = tkinter.Frame(ventana)
+frame_btn.pack(pady=20)
+
+
+btn = tkinter.Button(frame_btn,image=img_boton,height=100,width=100,command=buscar_nueva)
+
+btn.pack(side="left",padx=60)
 
 
 
-btn = tkinter.Button(ventana,image=img_boton,height=100,width=100,command=buscar_nueva)
 
-btn.pack(side="left")
-btn.place(x=200,y=30)
+btn_2= tkinter.Button(frame_btn,image=img_boton2,height=100,width=100,command=guardar_nueva)
 
+btn_2.pack(side="right",padx=60)
 
-
-btn_2= tkinter.Button(ventana,image=img_boton2,height=100,width=100,command=guardar_nueva)
-
-btn_2.pack(side="right")
-btn_2.place(x=600,y=30)
 
 imagen = tkinter.Label(ventana)
 imagen.pack()
